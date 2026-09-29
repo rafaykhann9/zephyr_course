@@ -77,4 +77,14 @@ endif # LED_ADVANCED
 
 endif # LED_SUBSYSTEM
 
+
+
+config APP_HEARTBEAT_PERIOD_MS
+    int "Heart Beat led interval"
+    default 500 
+    range 100 2000
+    help
+        Time between hearbeats.
+
+
 source "Kconfig.zephyr"
