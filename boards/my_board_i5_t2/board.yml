@@ -1,0 +1,6 @@
+board:
+  name: my_board_i5_t2
+  full_name: my own scratch Nucleo F401RE
+  vendor: st_rafay
+  socs:
+    - name: stm32f401xe
