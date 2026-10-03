@@ -1,0 +1,6 @@
+board:
+  name: our_board_i5_t1
+  full_name: our own Nucleo F401RE
+  vendor: st_rafay
+  socs:
+    - name: stm32f401xe
