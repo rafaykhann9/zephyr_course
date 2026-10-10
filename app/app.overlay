@@ -2,4 +2,10 @@
     aliases {
         app-led = &green_led_2;
     };
+
+    led_sensor: led_sensor {
+        compatible = "our,driver";
+        led-gpios = <&gpioa 5 GPIO_ACTIVE_HIGH>; /* LD2 */
+        status = "okay";
+    };
 };

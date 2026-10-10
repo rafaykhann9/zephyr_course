@@ -86,5 +86,5 @@ config APP_HEARTBEAT_PERIOD_MS
     help
         Time between hearbeats.
 
-
+rsource "drivers/our_driver/Kconfig"
 source "Kconfig.zephyr"

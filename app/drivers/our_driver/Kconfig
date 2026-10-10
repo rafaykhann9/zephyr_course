@@ -1,0 +1,8 @@
+menuconfig OUR_DRIVER
+    bool "Our Custom Driver"
+    default y
+    depends on DT_HAS_OUR_DRIVER_ENABLED # Only if HW is present in the DT
+    depends on SENSOR
+    select GPIO                          # Auto-pulls dependencies
+    help
+      Enable the custom LED sensor driver
