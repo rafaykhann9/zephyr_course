@@ -4,3 +4,5 @@ build
 # West files
 .west
 deps
+zephyr_driver_guide.md
+devicetree_overlay_cheatsheet.md
