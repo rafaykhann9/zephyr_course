@@ -6,3 +6,8 @@ build
 deps
 zephyr_driver_guide.md
 devicetree_overlay_cheatsheet.md
+
+# Twister: keep only the coverage report
+twister-out/*
+!twister-out/coverage/
+twister-out.*/
