@@ -47,12 +47,12 @@ static DEVICE_API(sensor, our_driver_api) = {
     .channel_get  = our_driver_channel_get,
 };
 
-/* Custom extension API: reset the fetch counter */
-int our_driver_reset_count(const struct device *dev)
+/* Custom extension API: set the fetch counter */
+int our_driver_set_count(const struct device *dev, uint32_t count)
 {
     struct our_driver_data *data = dev->data;
 
-    data->fetch_count = 0;
+    data->fetch_count = count;
     return 0;
 }
 

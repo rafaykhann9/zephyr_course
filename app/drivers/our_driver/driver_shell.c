@@ -1,5 +1,11 @@
+#include <stdlib.h>
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/shell/shell.h>
+
+#define SET_COUNT_MAX 100
+
+/* Custom extension API implemented in our_driver.c */
+int our_driver_set_count(const struct device *dev, uint32_t count);
 
 /* LED sensor from app.overlay (compatible = "our,driver") */
 static const struct device *const dev = DEVICE_DT_GET_ANY(our_driver);
@@ -50,10 +56,38 @@ static int cmd_sensor_info(const struct shell *sh, size_t argc, char **argv)
     return 0;
 }
 
+/* our_driver set <value>: calls the extension API our_driver_set_count() */
+static int cmd_sensor_set(const struct shell *sh, size_t argc, char **argv)
+{
+    char *end;
+    long value;
+
+    if (argc < 2) {
+        shell_error(sh, "Missing value. Usage: our_driver set <0-%d>", SET_COUNT_MAX);
+        return -EINVAL;
+    }
+
+    value = strtol(argv[1], &end, 10);
+    if (*end != '\0') {
+        shell_error(sh, "'%s' is not a number", argv[1]);
+        return -EINVAL;
+    }
+
+    if (value < 0 || value > SET_COUNT_MAX) {
+        shell_error(sh, "Value %ld out of range (0-%d)", value, SET_COUNT_MAX);
+        return -EINVAL;
+    }
+
+    our_driver_set_count(dev, (uint32_t)value);
+    shell_print(sh, "Fetch count set to %ld", value);
+    return 0;
+}
+
 SHELL_STATIC_SUBCMD_SET_CREATE(sub_our_driver,
     SHELL_CMD(fetch, NULL, "Fetch a sample (LED on).", cmd_sensor_fetch),
     SHELL_CMD(read,  NULL, "Read the sample and print it (LED off).", cmd_sensor_read),
     SHELL_CMD(info,  NULL, "Show device name and ready state.", cmd_sensor_info),
+    SHELL_CMD_ARG(set, NULL, "Set the fetch count: set <0-100>.", cmd_sensor_set, 2, 0),
     SHELL_SUBCMD_SET_END
 );
 
